@@ -7,6 +7,24 @@ import (
 	"time"
 )
 
+// Pointers
+
+func main() {
+	var thing1 = [5]float64{1,2,3,4,5}
+	fmt.Printf("The memory location of thing1 is %p: \n", &thing1)
+	var result = square(&thing1)
+	fmt.Printf("The result is %v \n", result)
+	fmt.Printf("The value of thing1 is %v \n", thing1)
+}
+
+func square(thing2 *[5]float64) [5]float64 {
+	for i:= range thing2 {
+		thing2[i] = thing2[i]*thing2[i]
+	}
+	return *thing2
+}
+
+
 // STRUCTS
 type Product struct {
 	id uint
@@ -52,11 +70,11 @@ func canMakeIt(e engine, miles uint) {
 	}
 }
 
-func main() {
-	var myEngine gasEngine = gasEngine{25, 15}
+/*func main() {
+	var myEngine electricEngine = electricEngine{25, 15}
 	fmt.Println(myEngine.milesLeft())
 	canMakeIt(myEngine, 50)
-}
+}*/
 
 
 
