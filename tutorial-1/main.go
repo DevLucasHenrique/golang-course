@@ -4,10 +4,30 @@ import (
 	"errors"
 	"fmt"
 	"strings"
-	"sync"
 	"time"
 )
 
+// CHANNELS
+
+func main() {
+	var c = make(chan int, 5)
+	go process(c)
+	for i:= range c {
+		println(i)
+		time.Sleep(time.Second)
+	}
+}
+
+func process(c chan int) {
+	defer close(c)
+	for i:=0;i<5;i++ {
+		c <- i
+	}
+	println("Finish process")
+}
+
+
+/*
 // SPEED WITH GOROUTINES
 
 var wg = sync.WaitGroup{}
@@ -44,6 +64,8 @@ func count() {
 		con += 1
 	}
 }
+
+*/
 
 /* var m = sync.Mutex{}
 var wg = sync.WaitGroup{} // wait group são couters que contam quantas vezes a espaunamos uma go routine quando terminamos uma task o couter vai para zero significando que o resto do código pode ser executado
