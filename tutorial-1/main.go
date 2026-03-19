@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/subtle"
 	"errors"
 	"fmt"
 	"strings"
@@ -15,11 +16,11 @@ var wg = sync.WaitGroup{} // wait group são couters que contam quantas vezes a 
 var dbData = []string{"id1", "id2", "id3", "id4", "id5"}
 var results = []string{}
 
-/* func main() {
+func main() {
 	t0 := time.Now()
 	for i:=0;i<len(dbData);i++ {
-		wg.Add(1)
 		go dbCall(i)
+		wg.Add(1)
 	}
 	wg.Wait()
 	fmt.Printf("Execution time: %v \n", time.Since(t0))
@@ -29,6 +30,7 @@ func dbCall(i int) {
 	var delay float32 = 2000
 	time.Sleep(time.Duration(delay)*time.Millisecond)
 	fmt.Printf("The results from db is: %v \n", dbData[i])
+	fmt.Println("The results are %v", results)
 	save(dbData[i])
 	wg.Done()
 }
@@ -37,7 +39,7 @@ func save(result string) {
 	m.Lock()
 	results = append(results, result)
 	m.Unlock()
-} */
+} 
 
 
 // Pointers
