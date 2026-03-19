@@ -1,7 +1,6 @@
 package main
 
 import (
-	"crypto/subtle"
 	"errors"
 	"fmt"
 	"strings"
@@ -9,9 +8,44 @@ import (
 	"time"
 )
 
-// 43:20
+// SPEED WITH GOROUTINES
 
-var m = sync.Mutex{}
+var wg = sync.WaitGroup{}
+
+func main() {
+	t := 1000
+	var t0 = time.Now()
+
+	for i:=0;i<t;i++ {
+		wg.Add(1)
+		go goCount()
+	}
+	wg.Wait()
+	fmt.Printf("Total time with goRoutines: %v \n", time.Since(t0))
+
+	var t1 = time.Now()
+	for i:=0;i<t;i++ {
+		count()
+	}
+	fmt.Printf("Total time without goRoutines: %v", time.Since(t1))
+}
+
+func goCount() {
+	var con int
+	for i:=0;i<1000000;i++ {
+		con += 1
+	}
+	wg.Done()
+}
+
+func count() {
+	var con int
+	for i:=0;i<1000000;i++ {
+		con += 1
+	}
+}
+
+/* var m = sync.Mutex{}
 var wg = sync.WaitGroup{} // wait group são couters que contam quantas vezes a espaunamos uma go routine quando terminamos uma task o couter vai para zero significando que o resto do código pode ser executado
 var dbData = []string{"id1", "id2", "id3", "id4", "id5"}
 var results = []string{}
@@ -39,7 +73,7 @@ func save(result string) {
 	m.Lock()
 	results = append(results, result)
 	m.Unlock()
-} 
+} */
 
 
 // Pointers
