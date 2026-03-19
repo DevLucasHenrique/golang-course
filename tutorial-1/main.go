@@ -4,12 +4,44 @@ import (
 	"errors"
 	"fmt"
 	"strings"
+	"sync"
 	"time"
 )
 
-// Pointers
+// 43:20
 
-func main() {
+var m = sync.Mutex{}
+var wg = sync.WaitGroup{} // wait group são couters que contam quantas vezes a espaunamos uma go routine quando terminamos uma task o couter vai para zero significando que o resto do código pode ser executado
+var dbData = []string{"id1", "id2", "id3", "id4", "id5"}
+var results = []string{}
+
+/* func main() {
+	t0 := time.Now()
+	for i:=0;i<len(dbData);i++ {
+		wg.Add(1)
+		go dbCall(i)
+	}
+	wg.Wait()
+	fmt.Printf("Execution time: %v \n", time.Since(t0))
+}
+
+func dbCall(i int) {
+	var delay float32 = 2000
+	time.Sleep(time.Duration(delay)*time.Millisecond)
+	fmt.Printf("The results from db is: %v \n", dbData[i])
+	save(dbData[i])
+	wg.Done()
+}
+
+func save(result string) {
+	m.Lock()
+	results = append(results, result)
+	m.Unlock()
+} */
+
+
+// Pointers
+func pointers() {
 	var thing1 = [5]float64{1,2,3,4,5}
 	fmt.Printf("The memory location of thing1 is %p: \n", &thing1)
 	var result = square(&thing1)
